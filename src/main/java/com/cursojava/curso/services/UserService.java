@@ -13,10 +13,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers() throws Exception {
+        try {
+            return userRepository.findAll();
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
     }
-    public void createUser(User user) {
-        userRepository.save(user);
+
+    public void createUser(User user) throws Exception {
+        try{
+            userRepository.save(user);
+        }catch(Exception e){
+            System.out.print(e);
+            throw new Exception(e);
+        }
     }
 }

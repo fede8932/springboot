@@ -17,22 +17,30 @@ public class TaskService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Task> getAllTask() {
-        return taskRepository.findAll();
+    public List<Task> getAllTask() throws Exception {
+        try {
+            return taskRepository.findAll();
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
     }
 
-    public void createTask(Task task) {
-        taskRepository.save(task);
+    public void createTask(Task task) throws Exception {
+        try{
+            taskRepository.save(task);
+        }catch(Exception e){
+            throw new Exception(e);
+        }
     }
 
-    public void updateTask(String id, String userId) {
+    public void updateTask(String id, String userId) throws Exception {
         try {
             Task tarea = taskRepository.findById(Long.parseLong(id)).get();
             User usuario = userRepository.findById(Long.parseLong(userId)).get();
             tarea.setUser(usuario);
             taskRepository.save(tarea);
         } catch (Exception e) {
-            throw e;
+            throw new Exception(e);
         }
     }
 }
