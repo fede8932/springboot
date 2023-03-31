@@ -42,11 +42,6 @@ public class User {
     @Column(name = "pass")
     private String pass;
 
-    @Getter
-    @Setter
-    @Column(name = "salt")
-    private String salt;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
 }

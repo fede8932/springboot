@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.cursojava.curso.dto.CreateUserDto;
+import com.cursojava.curso.dto.LoginUserDto;
 import com.cursojava.curso.models.User;
 import com.cursojava.curso.services.UserService;
 
@@ -33,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUsers(@RequestBody User user) {
+    public ResponseEntity<String> createUsers(@RequestBody CreateUserDto user) {
         try {
             userService.createUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body("Creado con exito");
@@ -42,4 +44,15 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Se produjo un error en el controlador",e);
         }
     }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody LoginUserDto dataUser) {
+        try {
+            return userService.loginUser(dataUser);
+        } catch (Exception e) {
+            System.out.print(e);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Los datos de inicio de sesión no son válidos",e);
+        }
+    }
+
 }

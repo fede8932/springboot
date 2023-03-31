@@ -6,4 +6,6 @@ import com.cursojava.curso.models.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    User findByEmail(String email);
+
 }
