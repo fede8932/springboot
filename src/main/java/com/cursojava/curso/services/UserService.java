@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cursojava.curso.dto.CreateUserDto;
 import com.cursojava.curso.dto.LoginUserDto;
 import com.cursojava.curso.dto.LoginUserOkDto;
+import com.cursojava.curso.dto.ReturnUserDto;
 import com.cursojava.curso.models.User;
 import com.cursojava.curso.repository.UserRepository;
 import com.cursojava.curso.security.JwtUtils;
@@ -42,7 +43,7 @@ public class UserService {
         }
     }
 
-    public String loginUser(LoginUserDto dataUser) throws Exception {
+    public ReturnUserDto loginUser(LoginUserDto dataUser) throws Exception {
         try {
             User user = userRepository.findByEmail(dataUser.getEmail());
             if(user == null){
@@ -56,7 +57,12 @@ public class UserService {
             userOk.setNombre(user.getNombre());
             userOk.setApellido(user.getApellido());
             userOk.setEmail(user.getEmail());
-            return JwtUtils.generateToken(userOk);
+            String token = JwtUtils.generateToken(userOk);
+            ReturnUserDto sendUser = new ReturnUserDto();
+            sendUser.setNombre(userOk.getNombre());
+            sendUser.setEmail(userOk.getEmail());
+            sendUser.setToken(token);
+            return sendUser;
         } catch (Exception e) {
             throw new Exception(e);
         }

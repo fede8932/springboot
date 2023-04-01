@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.cursojava.curso.dto.CreateUserDto;
 import com.cursojava.curso.dto.LoginUserDto;
+import com.cursojava.curso.dto.ReturnUserDto;
 import com.cursojava.curso.models.User;
 import com.cursojava.curso.services.UserService;
 
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody LoginUserDto dataUser) {
+    public ReturnUserDto loginUser(@RequestBody LoginUserDto dataUser) {
         try {
             return userService.loginUser(dataUser);
         } catch (Exception e) {
