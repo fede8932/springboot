@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.cursojava.curso.dto.CreateUserDto;
 import com.cursojava.curso.dto.LoginUserDto;
+import com.cursojava.curso.dto.LoginUserOkDto;
 import com.cursojava.curso.models.User;
 import com.cursojava.curso.repository.UserRepository;
+import com.cursojava.curso.security.JwtUtils;
 import com.cursojava.curso.security.PasswordEncoder;
 
 @Service
@@ -49,7 +51,12 @@ public class UserService {
             if(!passwordEncoder.validatePass(dataUser.getPass(), user.getPass())){
                 throw new NullPointerException("Usuario o contraseña no válidos");
             }
-            return "pass";
+            LoginUserOkDto userOk = new LoginUserOkDto();
+            userOk.setId(user.getId());
+            userOk.setNombre(user.getNombre());
+            userOk.setApellido(user.getApellido());
+            userOk.setEmail(user.getEmail());
+            return JwtUtils.generateToken(userOk);
         } catch (Exception e) {
             throw new Exception(e);
         }
