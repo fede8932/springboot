@@ -19,7 +19,6 @@ public class JwtUtils {
     private static final long EXPIRATION_TIME = 86400000; // 24 horas
 
     public static String generateToken(LoginUserOkDto user) {
-        System.out.print(SECRET_KEY);
         Claims claims = Jwts.claims();
         claims.put("id", user.getId());
         claims.put("nombre", user.getNombre());
